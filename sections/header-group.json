@@ -13,10 +13,20 @@
             "color_scheme": "accent-2",
             "link": ""
           }
+        },
+        "9f04a816-8a42-442c-8e02-6e9eec267dfc": {
+          "type": "text",
+          "settings": {
+            "show_daylight_savings": true,
+            "countdown": "Apr 30 2023 14:00:00 GMT-4",
+            "countdown_title": "Special Offer 30% OFF 🔥",
+            "link": "shopify:\/\/products\/coffee-brazil"
+          }
         }
       },
       "block_order": [
-        "announcement-bar-0"
+        "announcement-bar-0",
+        "9f04a816-8a42-442c-8e02-6e9eec267dfc"
       ],
       "settings": {}
     },

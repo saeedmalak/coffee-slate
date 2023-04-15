@@ -1,0 +1,99 @@
+{% if end_date != blank %}
+<div class="timer">
+  {% if title != blank %}
+    <h4 class="timer__title">{{ title }}</h4>
+  {% endif %}
+  <div class="timer-display">
+    <div class="timer-block">
+      <div class="timer-block__num js-timer-days">00</div>
+      <div class="timer-block__unit">Days</div>
+    </div>
+    <div class="timer-block">
+      <div class="timer-block__num js-timer-hours">00</div>
+      <div class="timer-block__unit">Hours</div>
+    </div>
+    <div class="timer-block">
+      <div class="timer-block__num js-timer-minutes">00</div>
+      <div class="timer-block__unit">Minutes</div>
+    </div>
+    <div class="timer-block">
+      <div class="timer-block__num js-timer-seconds">00</div>
+      <div class="timer-block__unit">Seconds</div>
+    </div>
+  </div>
+</div>
+<style>
+/* styles for timer */
+  .timer {
+    background: #7776fc;
+    padding: 10px;
+    margin: 10px 0;
+    color: white;
+  }
+  .timer--expired {
+    display: none;
+  }
+  .timer__title {
+    @extend .paragraph;
+    text-align: center;
+    color: white;
+  }
+  .timer-display {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 5px;
+  }
+  .timer-block {
+    position: relative;
+    padding: 0 10px;
+    margin: 0 20px;
+    &:not(:last-child):after {
+      content: ':';
+      position: absolute;
+      left: 70px;
+      bottom: 15px;
+      font-size: 4rem;
+    }
+  }
+  .timer-block__num,
+  .timer-block__unit {
+    display: block;
+    text-align: center;
+  }
+  .timer-block__num {
+    border: 1px solid whitesmoke;
+    padding: 0 10px;
+    font-size: 3rem;
+    border-radius: 5px;
+    min-width: 5.4rem;
+  }
+</style>
+<script type="text/javascript">
+(function () { 
+  const second = 1000,
+      minute = second * 60,
+      hour = minute * 60,
+      day = hour * 24;
+  
+  const countDownDateTime = new Date('{{- end_date -}}').getTime(),
+    countDownTimer = setInterval(function() {
+
+      const currentDateTime = new Date().getTime(),
+        remainingTime = countDownDateTime - currentDateTime;
+
+      document.querySelector('.js-timer-days').innerText = Math.floor(remainingTime / (day));
+      document.querySelector('.js-timer-hours').innerText = Math.floor((remainingTime % (day)) / (hour));
+      document.querySelector('.js-timer-minutes').innerText = Math.floor((remainingTime % (hour)) / (minute));
+      document.querySelector('.js-timer-seconds').innerText = Math.floor((remainingTime % (minute)) / second); 
+    
+      if (remainingTime < 0) {
+        document.querySelector(".timer__title").innerText = "😢 EXPIRED! 😢";
+        document.querySelector(".timer__title").style.fontSize = "x-large";
+        document.querySelector(".timer-display").style.display = "none";
+        clearInterval(timer);
+      }
+    }, second)
+}());
+</script>
+{% endif %}

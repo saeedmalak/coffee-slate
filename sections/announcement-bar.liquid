@@ -18,7 +18,27 @@
             </a>
           {%- endif -%}
         {%- endif -%}
-      </div>
+        </div>
+        {%- when 'text' -%}
+          <div class="announcement-bar color-{{ block.settings.color_scheme }} gradient" role="region" aria-label="{{ 'sections.header.announcement' | t }}" {{ block.shopify_attributes }}>
+            {%- if block.settings.countdown != blank -%}
+              {%- if block.settings.link != blank -%}
+                <a href="{{ block.settings.link }}" class="announcement-bar__link link link--text focus-inset animate-arrow">
+              {%- endif -%}
+              <div class="page-width">
+                <p class="announcement-bar__message {{ block.settings.text_alignment }} h5 {% if block.settings.show_daylight_savings != blank %} daylight_saving_time {% endif %}">
+                  {% include 'countdown-timer',
+                    title: block.settings.countdown_title,
+                    end_date: block.settings.countdown
+                  %}
+                </p>
+              </div>
+              {%- if block.settings.link != blank -%}
+                </a>
+              {%- endif -%}
+            {% endif %}
+          </div>
+      
   {%- endcase -%}
 {%- endfor -%}
 
@@ -29,7 +49,34 @@
   "class": "announcement-bar-section",
   "blocks": [
     {
+      "type": "text",
+      "name": "Countdown",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "countdown",
+          "label": "Countdown Timer",
+          "default": "Apr 25 2023 16:00:00 GMT-0700",
+          "info": "Enter deadline with format: {Short Month} {Day} {Year} {HR:MN:SS} {Time Zone Abbreviation}, For example: Example: Feb 16 2023 23:59:00 EST Note: Substract an hour for Daylight Saving Time (DST)"
+        },
+        {
+          "type": "text",
+          "id": "countdown_title",
+          "label": "Countdown Title",
+          "default": "Special Offer 30% OFF 🔥",
+          "info": "Enter the custom type of special offer, ie. Black Friday Sale up to 50% OFF, Special Offer 30% OFF 🔥"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.announcement-bar.blocks.announcement.settings.link.label"
+        }
+      ]
+    },
+    {
       "type": "announcement",
+      "limit": 1,
       "name": "t:sections.announcement-bar.blocks.announcement.name",
       "settings": [
         {
